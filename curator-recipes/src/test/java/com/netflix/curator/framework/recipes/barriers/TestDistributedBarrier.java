@@ -159,7 +159,10 @@ public class TestDistributedBarrier extends BaseClassForTests
             client.start();
 
             final DistributedBarrier      barrier = new DistributedBarrier(client, "/barrier");
-            Assert.assertTrue(barrier.waitOnBarrier(10, TimeUnit.SECONDS));
+            long start = System.currentTimeMillis();
+    		Assert.assertTrue(barrier.waitOnBarrier(10, TimeUnit.SECONDS));
+			long end = System.currentTimeMillis();
+			Assert.assertTrue((end - start) >= 10 * 1000);
 
             // just for grins, test the infinite wait
             ExecutorService         service = Executors.newSingleThreadExecutor();
